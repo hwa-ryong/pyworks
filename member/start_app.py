@@ -4,6 +4,7 @@
 from flask import Flask, render_template, request, \
     redirect, url_for, session
 import sqlite3
+import datetime
 
 app = Flask(__name__)
 
@@ -136,7 +137,7 @@ def detail(bno):  #매개변수로 bno 설정
     board = cursor.fetchone()  # 게시글 1개 가져옴
 
     # 조회수 증가
-    hit = board[4]
+    hit = board[5]
     sql = f"UPDATE board SET hit = {hit + 1} WHERE bno = {bno}"
     cursor.execute(sql)
     conn.commit()
@@ -161,14 +162,16 @@ def delete(bno):
 def update(bno):
     if request.method == "POST":
         # 수정한 입력 내용을 board 테이블에 저장
-        title = request.form['title']
-        content = request.form['content']
+        title = request.form['title'].replace("'","''")
+        content = request.form['content'].replace("'","''")
+        now = datetime.datetime.today()
+        modifydate = now.strftime("%Y-%m-%d, %H:%M:%S")
 
         # DB에 저장
         conn = getconn()
         cursor = conn.cursor()
-        sql = f"UPDATE board SET title = '{title}', content = '{content}' " \
-              f"WHERE bno = {bno}"
+        sql = f"UPDATE board SET title = '{title}', content = '{content}', " \
+              f"modifydate = '{modifydate}' WHERE bno = {bno}"
         cursor.execute(sql)
         conn.commit()
         conn.close()
