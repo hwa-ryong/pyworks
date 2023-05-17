@@ -6,9 +6,11 @@ print(n)
 
 # 중첩 for문 - 조건문
 for i in range(0, n):
+    count = 1 # for문의 로컬(지역) 변수
     for j in range(0, n):
         if score[i] < score[j]:
-            rank[i] += 1   #순위 1증가(순위가 밀림)
+            count += 1
+        rank[i] = count  #순위 1증가(순위가 밀림)
 
 '''
 i=0 j=0 score[0] < score[0] False rank[0] = 1
