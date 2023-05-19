@@ -10,7 +10,7 @@ def search_list(a, x):
     return -1
 
 def search_list2(a, x):
-    same_num = []
+    same_num = []   # 중복 위치를 저장할 리스트 생성
     n = len(a)
     for i in range(0, n):
         if a[i] == x:
