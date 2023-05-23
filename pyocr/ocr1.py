@@ -7,4 +7,11 @@ pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
 img = Image.open("source/news.png")
 #img.show()
 text = pytesseract.image_to_string(img, lang="kor")
-print(text)
+#print(text)
+print(text.replace(" ", ""))  #공백 제거
+
+#변환된 텍스트를 파일에 쓰기
+#encoding='utf-8' 꼭 명시해야 함
+with open("./output/news.text", "w", encoding='utf-8') as f:
+    #f.write(text)
+    f.write(text.replace(" ", ""))
